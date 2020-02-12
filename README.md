@@ -14,3 +14,6 @@ Sample Screen Shot:
 ![Alt text](/src/assets/screenshot.png?raw=true "ScreenShot")
 
 ![Alt text](/src/assets/screenshot1.png?raw=true "ScreenShot")
+
+Now you can also generate TypeDoc for the development using below command:
+- npm run tdoc

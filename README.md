@@ -17,3 +17,5 @@ Sample Screen Shot:
 
 Now you can also generate TypeDoc for the development using below command:
 - npm run tdoc
+This will generate the documents for this project. ScreenShot below:
+![Alt text](/src/assets/screenshot2.png?raw=true "ScreenShot")

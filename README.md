@@ -8,3 +8,9 @@ Steps to make it run:
 This code is develped using 
 node 12
 angular 9
+
+Sample Screen Shot:
+
+![Alt text](/src/assets/screenshot.png?raw=true "ScreenShot")
+
+![Alt text](/src/assets/screenshot1.png?raw=true "ScreenShot")

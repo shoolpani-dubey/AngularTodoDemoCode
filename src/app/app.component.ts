@@ -22,6 +22,10 @@ export class AppComponent implements OnInit{
   //Function defination at the bottom, this improves readability and code understanding
   constructor(private localStorageProvider:LocalStorageProviderService){
   }
+  
+  /**
+   * @description Adds todo from input to the todolist
+   */
   addToDoImpl(){
     const toDo={
       ifDone: false,
@@ -31,10 +35,19 @@ export class AppComponent implements OnInit{
     this.addTodoText="";
     this.setTodoToLocalStorage();
   }
+  /**
+   * 
+   * @param {number} ind Helps in deleting the todo based on index ind
+   */
   deleteToDoImpl(ind:number){
     this.todoList.splice(ind,1);
     this.setTodoToLocalStorage();
   }
+  
+  /**
+   * 
+   * @param {number} ind This function will strike the selected todo to show that its done.
+   */
   checkToDoImpl(ind:number){
     const checkedToDo= this.todoList[ind];
     this.todoList.splice(ind,1);
@@ -42,10 +55,17 @@ export class AppComponent implements OnInit{
     this.todoList.push(checkedToDo);
     this.setTodoToLocalStorage();
   }
+
+  /**
+   * Angular ngOnInit lifecycle hook
+   */
   ngOnInit(){
     const toDosFromStorage= this.localStorageProvider.get(this.localStorageToDoContext);
     this.todoList=toDosFromStorage||[];
   }
+  /**
+   * @description Sets the todolist to localstorage
+   */
   setTodoToLocalStorage(){
     this.localStorageProvider.set(this.localStorageToDoContext,this.todoList);
   }

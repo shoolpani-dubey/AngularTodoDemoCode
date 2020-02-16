@@ -302,7 +302,6 @@
     flex-direction: column;
     align-items: center;
 }
-
 .t_input_box{
     padding: 16px 16px;
     background-color: #d3d3d385;
@@ -337,6 +336,12 @@
     border-top-right-radius: 4px;
     border-bottom-right-radius: 4px;
     cursor: pointer;
+}
+.t_input_box.t_input_box_date_picker{
+    padding: 0px 0px;
+    border: 1px solid lightgrey;
+    width: inherit;
+    margin-top: 16px;
 }
 .t_list_container{
     width: 100%;

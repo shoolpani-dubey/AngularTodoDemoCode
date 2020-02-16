@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { faTrash,faCheck, IconDefinition } from '@fortawesome/free-solid-svg-icons'
+import { faTrash,faCheck, IconDefinition, faCalendarDay } from '@fortawesome/free-solid-svg-icons'
 import {LocalStorageProviderService} from './service/local-storage-provider.service';
+import { NgbCalendar, NgbDate } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
   selector: 'app-root',
@@ -9,18 +10,20 @@ import {LocalStorageProviderService} from './service/local-storage-provider.serv
 })
 export class AppComponent implements OnInit{
   title:string = 'todo-demo';
-  localStorageToDoContext:string= 'todo';
+  dateSelected:any;
   faTrash:IconDefinition= faTrash;
   faCheck:IconDefinition= faCheck;
+  faCalendarDay:IconDefinition= faCalendarDay;
   addTodoText:string= '';
   todoList:Array<object>= [];
 
   addToDo:Function= this.addToDoImpl;
   deleteToDo:Function= this.deleteToDoImpl;
   checkToDo:Function= this.checkToDoImpl;
+  dateChanged:Function= this.dateChangedImpl;
 
   //Function defination at the bottom, this improves readability and code understanding
-  constructor(private localStorageProvider:LocalStorageProviderService){
+  constructor(private localStorageProvider:LocalStorageProviderService, private calendar: NgbCalendar){
   }
   
   /**
@@ -33,7 +36,7 @@ export class AppComponent implements OnInit{
     }
     this.todoList.unshift(toDo);
     this.addTodoText="";
-    this.setTodoToLocalStorage();
+    this.setTodoToLocalStorage(this.dateSelected);
   }
   /**
    * 
@@ -41,7 +44,7 @@ export class AppComponent implements OnInit{
    */
   deleteToDoImpl(ind:number){
     this.todoList.splice(ind,1);
-    this.setTodoToLocalStorage();
+    this.setTodoToLocalStorage(this.dateSelected);
   }
   
   /**
@@ -53,20 +56,27 @@ export class AppComponent implements OnInit{
     this.todoList.splice(ind,1);
     checkedToDo['ifDone']=true;
     this.todoList.push(checkedToDo);
-    this.setTodoToLocalStorage();
+    this.setTodoToLocalStorage(this.dateSelected);
   }
 
   /**
    * Angular ngOnInit lifecycle hook
    */
   ngOnInit(){
-    const toDosFromStorage= this.localStorageProvider.get(this.localStorageToDoContext);
-    this.todoList=toDosFromStorage||[];
+    this.dateSelected = this.calendar.getToday();
+    this.dateChangedImpl(this.dateSelected);
   }
   /**
    * @description Sets the todolist to localstorage
    */
-  setTodoToLocalStorage(){
-    this.localStorageProvider.set(this.localStorageToDoContext,this.todoList);
+  setTodoToLocalStorage(date:NgbDate){
+    this.localStorageProvider.set(date, this.todoList);
+  }
+  /**
+   * @description triggered when the date is changed.
+   */
+  dateChangedImpl(todoDate:NgbDate){
+    const toDosFromStorage= this.localStorageProvider.get(todoDate);
+    this.todoList=toDosFromStorage||[];
   }
 }
